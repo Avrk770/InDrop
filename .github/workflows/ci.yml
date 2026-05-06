@@ -1,0 +1,32 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: macos-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Show Swift version
+        run: swift --version
+
+      - name: Build
+        run: |
+          export HOME="$PWD/.tmp-home"
+          export SWIFTPM_MODULECACHE_OVERRIDE="$PWD/.build/module-cache"
+          export CLANG_MODULE_CACHE_PATH="$PWD/.build/clang-module-cache"
+          mkdir -p "$HOME" "$SWIFTPM_MODULECACHE_OVERRIDE" "$CLANG_MODULE_CACHE_PATH"
+          swift build
+
+      - name: Test
+        run: |
+          export HOME="$PWD/.tmp-home"
+          export SWIFTPM_MODULECACHE_OVERRIDE="$PWD/.build/module-cache"
+          export CLANG_MODULE_CACHE_PATH="$PWD/.build/clang-module-cache"
+          mkdir -p "$HOME" "$SWIFTPM_MODULECACHE_OVERRIDE" "$CLANG_MODULE_CACHE_PATH"
+          swift test
