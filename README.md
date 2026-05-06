@@ -38,6 +38,12 @@ Before shipping UI or packaging changes, also run the manual checklist:
 Tests/ManualSmokeChecklist.md
 ```
 
+To run the automated release checks:
+
+```sh
+./Scripts/verify-release.sh
+```
+
 ## Release Notes
 
 - The marketing version is read from `VERSION`.
