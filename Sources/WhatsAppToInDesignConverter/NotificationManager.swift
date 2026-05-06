@@ -75,7 +75,7 @@ final class NotificationManager: NSObject, UNUserNotificationCenterDelegate {
             trigger: nil
         )
 
-        try? await center.add(request)
+        center.add(request) { _ in }
     }
 
     nonisolated func userNotificationCenter(

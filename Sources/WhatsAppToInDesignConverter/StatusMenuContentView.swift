@@ -1111,12 +1111,10 @@ private struct AsyncThumbnailView: View {
     }
 
     private func loadImage() async -> NSImage? {
-        await Task.detached(priority: .utility) {
-            if url.pathExtension.caseInsensitiveCompare("pdf") == .orderedSame {
-                return renderPDFThumbnail(url: url)
-            }
-            return NSImage(contentsOf: url)
-        }.value
+        if url.pathExtension.caseInsensitiveCompare("pdf") == .orderedSame {
+            return renderPDFThumbnail(url: url)
+        }
+        return NSImage(contentsOf: url)
     }
 }
 
@@ -1125,9 +1123,7 @@ private func renderPDFThumbnail(url: URL) -> NSImage? {
 }
 
 private func renderPDFPageThumbnail(url: URL, page: Int) async -> NSImage? {
-    await Task.detached(priority: .utility) {
-        renderPDFPageThumbnailSync(url: url, page: page, longestSide: 118)
-    }.value
+    renderPDFPageThumbnailSync(url: url, page: page, longestSide: 118)
 }
 
 private func renderPDFPageThumbnailSync(url: URL, page pageNumber: Int, longestSide: CGFloat) -> NSImage? {
