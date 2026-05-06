@@ -952,7 +952,7 @@ private struct PDFPageThumbnailButton: View {
         .buttonStyle(.plain)
         .onHover { isHovered = $0 }
         .task(id: "\(url.path)-\(page)") {
-            image = await renderPDFPageThumbnail(url: url, page: page)
+            image = renderPDFPageThumbnail(url: url, page: page)
         }
     }
 }
@@ -1106,11 +1106,11 @@ private struct AsyncThumbnailView: View {
             }
         }
         .task(id: url) {
-            image = await loadImage()
+            image = loadImage()
         }
     }
 
-    private func loadImage() async -> NSImage? {
+    private func loadImage() -> NSImage? {
         if url.pathExtension.caseInsensitiveCompare("pdf") == .orderedSame {
             return renderPDFThumbnail(url: url)
         }
@@ -1122,7 +1122,7 @@ private func renderPDFThumbnail(url: URL) -> NSImage? {
     renderPDFPageThumbnailSync(url: url, page: 1, longestSide: 160)
 }
 
-private func renderPDFPageThumbnail(url: URL, page: Int) async -> NSImage? {
+private func renderPDFPageThumbnail(url: URL, page: Int) -> NSImage? {
     renderPDFPageThumbnailSync(url: url, page: page, longestSide: 118)
 }
 
